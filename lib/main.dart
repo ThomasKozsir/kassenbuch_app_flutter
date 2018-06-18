@@ -11,6 +11,8 @@ class KassenbuchApp extends StatelessWidget {
       title: 'Kassenbuch App',
       theme: new ThemeData(
         primarySwatch: Colors.pink,
+        primaryColor: Colors.pink,
+        accentColor: Colors.white,
       ),
       home: new LoginPage(title: 'Service Portal Mandanten'),
     );

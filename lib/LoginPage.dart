@@ -26,33 +26,31 @@ class LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                //email
-                new Row(
-                    children: <Widget>[
-                      new Text("E-Mail:"),
-                      new Expanded(child:
-                      new TextField(keyboardType: TextInputType.emailAddress)
-                      )
-                    ]
-                ),
-                //password
-                new Row(
-                  children: <Widget>[
-                    new Text("Passwort:"),
-                    new Expanded(child: new TextField(obscureText: true))
-                  ],
-                ),
-                //login button
-                new Row(
-                  children: <Widget>[
-                    new RaisedButton(
-                      color: Colors.pinkAccent,
-                      child: new Text("Anmelden", style: new TextStyle(color: Colors.white)),
-                      onPressed: ()=>{
-                        Navigator.push(context, new MaterialPageRoute(builder: (context) => new Overview()))
-                      }
+                new TextFormField(
+                    decoration: new InputDecoration(
+                      border: const UnderlineInputBorder(),
+                      filled: true,
+                      hintText: "Email Adresse eingeben",
+                      labelText: "E-Mail",
                     )
-                  ]
+                ),
+                new TextFormField(
+                  decoration: new InputDecoration(
+                    border: const UnderlineInputBorder(),
+                    filled: true,
+                    hintText: "Passwort eingeben",
+                    labelText: "Passwort",
+                  ),
+                ),
+                new Spacer(
+
+                ),
+                new RaisedButton(
+                  color: Colors.pinkAccent,
+                  child: new Text("Anmelden", style: new TextStyle(color: Colors.white)),
+                  onPressed: ()=>{
+                    //Navigator.push(context, new MaterialPageRoute(builder: (context) => new Overview()))
+                  }
                 )
               ],
             ),
