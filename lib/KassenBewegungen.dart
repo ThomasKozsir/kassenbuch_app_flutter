@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kassenbuch_app/Classes/Transaktion.dart';
+import 'package:kassenbuch_app/NeueTransaktionsPage.dart';
 import 'package:kassenbuch_app/Widgets/TransaktionWidget.dart';
 
 class KassenBewegungen extends StatefulWidget {
@@ -39,12 +40,12 @@ class KassenBewegungenState extends State<KassenBewegungen> {
           ),
         ),
       floatingActionButton: new FloatingActionButton(
-          onPressed: (){
-            Navigator.pushNamed(context, "/NeueTransaktionsPage");
+          onPressed: ()async{
+            final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => new NeueTransaktionsPage()));
+            _transaktionenListe.add(result);
           },
         backgroundColor: Colors.pink,
         foregroundColor: Colors.white,
-        heroTag: "fabToBackground",
         child: new Icon(Icons.add),
           ),
 
