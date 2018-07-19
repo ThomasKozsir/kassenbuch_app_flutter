@@ -36,6 +36,14 @@ flutter:
   #  - images/a_dot_ham.jpeg
   assets:
     - assets/icon.png
+    - assets/home_icon.png
+    - assets/euro_icon.png
+    - assets/help_icon.png
+    - assets/logout_icon.png
+    - assets/mandator_icon.png
+    - assets/cash_icon.png
+    - assets/check.png
+    - assets/upload.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

@@ -23,16 +23,20 @@ class LoginPageState extends State<LoginPage> {
           child:
           Padding(
             padding: const EdgeInsets.all(64.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: ListView(
               children: <Widget>[
+                new Image(
+                    image: new AssetImage("assets/icon.png"),
+                    alignment: Alignment.topLeft,
+                  fit: BoxFit.scaleDown,
+                ),
                 new TextFormField(
                     decoration: new InputDecoration(
                       border: const UnderlineInputBorder(),
                       filled: true,
                       hintText: "Email Adresse eingeben",
                       labelText: "E-Mail",
-                    )
+                    ),
                 ),
                 new TextFormField(
                   decoration: new InputDecoration(
@@ -42,15 +46,16 @@ class LoginPageState extends State<LoginPage> {
                     labelText: "Passwort",
                   ),
                 ),
-                new Spacer(
 
-                ),
-                new RaisedButton(
-                  color: Colors.pinkAccent,
-                  child: new Text("Anmelden", style: new TextStyle(color: Colors.white)),
-                  onPressed: ()=>{
-                    //Navigator.push(context, new MaterialPageRoute(builder: (context) => new Overview()))
-                  }
+                Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: new RaisedButton(
+                    color: Colors.pinkAccent,
+                    child: new Text("Anmelden", style: new TextStyle(color: Colors.white)),
+                    onPressed: (){
+                      Navigator.push(context,  MaterialPageRoute(builder: (context) => new Overview()));
+                    },
+                  ),
                 )
               ],
             ),
