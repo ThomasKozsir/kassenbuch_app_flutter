@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="70f9d40a-47f2-4f82-b642-978d43f43322" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/lib/NeueTransaktionsPage.dart" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/lib/KassenBewegungen.dart" afterPath="$PROJECT_DIR$/lib/KassenBewegungen.dart" />
-      <change beforePath="$PROJECT_DIR$/lib/Widgets/OverviewDrawerItem.dart" afterPath="$PROJECT_DIR$/lib/Widgets/OverviewDrawerItem.dart" />
-      <change beforePath="$PROJECT_DIR$/lib/main.dart" afterPath="$PROJECT_DIR$/lib/main.dart" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -266,7 +262,14 @@
       <option name="project" value="LOCAL" />
       <updated>1532010936363</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Riesiges Update:&#10;- neu: Abmeldebutton und Kanzlei Info im Menu&#10;- neu: Anzeige von Mandanten und Web-Kassen&#10;- neu: Auflistung von getätigten Transaktionen einer Kasse">
+      <created>1532011817913</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1532011817913</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
