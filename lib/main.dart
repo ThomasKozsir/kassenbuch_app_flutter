@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kassenbuch_app/KassenBewegungen.dart';
 import 'package:kassenbuch_app/KassenbuchPage.dart';
 import 'package:kassenbuch_app/LoginPage.dart';
+import 'package:kassenbuch_app/NeueTransaktionsPage.dart';
 import 'package:kassenbuch_app/Overview.dart';
 
 void main() => runApp(new KassenbuchApp());
@@ -23,6 +24,7 @@ class KassenbuchApp extends StatelessWidget {
         '/Login': (_)=> new LoginPage(),
         '/Kassenbuch':(_)=> new KassenbuchPage(),
         '/KassenBewegungen': (_)=> new KassenBewegungen("Standart Kasse"),
+        '/NeueTransaktionsPage': (_)=> new NeueTransaktionsPage(),
       },
     );
   }

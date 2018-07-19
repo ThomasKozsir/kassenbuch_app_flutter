@@ -39,9 +39,12 @@ class KassenBewegungenState extends State<KassenBewegungen> {
           ),
         ),
       floatingActionButton: new FloatingActionButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.pushNamed(context, "/NeueTransaktionsPage");
+          },
         backgroundColor: Colors.pink,
         foregroundColor: Colors.white,
+        heroTag: "fabToBackground",
         child: new Icon(Icons.add),
           ),
 
@@ -67,9 +70,12 @@ class KassenBewegungenState extends State<KassenBewegungen> {
         "0815", "19.00 %", "180", "2010", "Bewirtung", true);
     Transaktion t2 = new Transaktion("10.06.2018", "0000002", "145.00 €",
         "1360", "7.00 %", "-", "-", "Bewirtung", false);
+    Transaktion t3 = new Transaktion("14.06.2018", "0000003", "23.00 €",
+        "1360", "19.00 %", "-", "-", "Bewirtung", false);
 
     liste.add(t1);
     liste.add(t2);
+    liste.add(t3);
 
     return liste;
   }

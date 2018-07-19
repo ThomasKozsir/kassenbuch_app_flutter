@@ -17,7 +17,8 @@ class OverviewDrawerItem extends StatelessWidget{
           if(_nextPage != "/Login")
             Navigator.pushNamed(context, _nextPage);
           else{
-            Navigator.popUntil(context, ModalRoute.withName('LoginPage'));
+            Navigator.pop(context);
+            Navigator.pop(context);
           }
         },
         child: new Row(
