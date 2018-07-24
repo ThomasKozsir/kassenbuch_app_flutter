@@ -10,10 +10,17 @@ class NeueTransaktionsPage extends StatefulWidget {
 }
 
 class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
+  TextEditingController datumController,
+      belegnummerController,
+      betragController,
+      kontoController,
+      kostenstellenController,
+      kostenTraegerController,
+      umsatzsteuerController,
+      buchungstextController,
+      ausgleichsinfoController;
 
-  TextEditingController datumController, belegnummerController, betragController, kontoController, kostenstellenController, kostenTraegerController, umsatzsteuerController, buchungstextController, ausgleichsinfoController;
-
-  NeueTransaktionsPageState(){
+  NeueTransaktionsPageState() {
     datumController = TextEditingController();
     belegnummerController = TextEditingController();
     betragController = TextEditingController();
@@ -39,14 +46,13 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
               new TextFormField(
                 controller: buchungstextController,
                 decoration: new InputDecoration(
-                  border: const UnderlineInputBorder(),
-                  filled: true,
-                  labelText: "Buchungstext"
-                ),
+                    border: const UnderlineInputBorder(),
+                    filled: true,
+                    labelText: "Buchungstext"),
               ),
               //Datum
               new TextFormField(
-                  controller: datumController,
+                controller: datumController,
                 decoration: new InputDecoration(
                   border: const UnderlineInputBorder(),
                   filled: true,
@@ -55,7 +61,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
               ),
               //Belegnummer
               new TextFormField(
-                  controller: belegnummerController,
+                controller: belegnummerController,
                 decoration: new InputDecoration(
                   border: const UnderlineInputBorder(),
                   filled: true,
@@ -65,7 +71,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
               ),
               //Gewinn/Verlust
               new TextFormField(
-                  controller: betragController,
+                controller: betragController,
                 decoration: new InputDecoration(
                   border: const UnderlineInputBorder(),
                   filled: true,
@@ -83,6 +89,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
                   ),
                   new DropdownButton(
                     items: GetKontoValues(),
+                    onChanged: (value) {},
                   ),
                 ],
               ),
@@ -91,15 +98,15 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
                 children: <Widget>[
                   new Text("Kostenstelle:"),
                   new DropdownButton(
-                      items: GetKostenstellenValues(),
-                      onChanged: null)
+                      items: GetKostenstellenValues(), onChanged: null)
                 ],
               ),
               //Kostenträger
               new Row(
                 children: <Widget>[
                   new Text("Kostenträger: "),
-                  new DropdownButton(items: GetKostentraegerItems(), onChanged: null)
+                  new DropdownButton(
+                      items: GetKostentraegerItems(), onChanged: null)
                 ],
               ),
               //USt
@@ -111,20 +118,19 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
               ),
               //OP-Ausgleichsinfo
               new TextFormField(
-                  controller: ausgleichsinfoController,
+                controller: ausgleichsinfoController,
                 decoration: new InputDecoration(
                     border: const UnderlineInputBorder(),
                     filled: true,
-                    labelText: "OP-Ausgleichsinfo"
-                ),
+                    labelText: "OP-Ausgleichsinfo"),
               ),
               //Speicher Button
               new Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  new FlatButton(
-                      onPressed: SaveTransaktion(context),
-                      child: new Text("Speichern"),
+                  new MaterialButton(
+                    onPressed: () => saveTransaktion(context),
+                    child: new Text("Speichern"),
                     color: Colors.pink,
                   ),
                 ],
@@ -135,7 +141,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
   }
 
   @override
-  void dispose(){
+  void dispose() {
     datumController.dispose();
     belegnummerController.dispose();
     betragController.dispose();
@@ -150,68 +156,121 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
 
   List<DropdownMenuItem> GetKontoValues() {
     List<DropdownMenuItem> list = new List();
-    list.add(new DropdownMenuItem<String>(child: new Text("1360 Bareinlage"), value: "1360 Bareinlage",));
+    list.add(new DropdownMenuItem<String>(
+      child: new Text("1360 Bareinlage"),
+      value: "1360 Bareinlage",
+    ));
     list.add(new DropdownMenuItem(
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Text("4530 Tanken"),
-          new Text("Kostenstelle: 180 Kostenträger: 2010", style: new TextStyle(color: Colors.grey),),
+          new Text(
+            "Kostenstelle: 180 Kostenträger: 2010",
+            style: new TextStyle(color: Colors.grey),
+          ),
         ],
-      ), value: "4530 Tanken",
-    )
-    );
-    list.add(new DropdownMenuItem<String>(child: new Text("4570 Parkgebühren"), value: "4570 Parkgebühren",));
+      ),
+      value: "4530 Tanken",
+    ));
+    list.add(new DropdownMenuItem<String>(
+      child: new Text("4570 Parkgebühren"),
+      value: "4570 Parkgebühren",
+    ));
     list.add(new DropdownMenuItem<String>(
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Text("4600 Werbekosten"),
-          new Text("Kostenstelle: Allgemeine sonst. Kosten 1", style: new TextStyle(color: Colors.grey),),
+          new Text(
+            "Kostenstelle: Allgemeine sonst. Kosten 1",
+            style: new TextStyle(color: Colors.grey),
+          ),
         ],
-      ), value: "4600 Werbekosten",));
-    list.add(new DropdownMenuItem<String>(child: new Text("4640 Repräsentationskosten"), value: "4600 Werbekosten",));
+      ),
+      value: "4600 Werbekosten",
+    ));
+    list.add(new DropdownMenuItem<String>(
+      child: new Text("4640 Repräsentationskosten"),
+      value: "4600 Werbekosten",
+    ));
     list.add(new DropdownMenuItem<String>(
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Text("4651 Bewirtung"),
-          new Text("USt: 7% USt/7% VSt", style: new TextStyle(color: Colors.grey),),
+          new Text(
+            "USt: 7% USt/7% VSt",
+            style: new TextStyle(color: Colors.grey),
+          ),
         ],
-      ), value: "4651 Bewirtung USt: 7%",));
+      ),
+      value: "4651 Bewirtung USt: 7%",
+    ));
     list.add(new DropdownMenuItem<String>(
       child: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Text("4651 Bewirtung"),
-          new Text("USt: 19% USt/19% VSt", style: new TextStyle(color: Colors.grey),),
+          new Text(
+            "USt: 19% USt/19% VSt",
+            style: new TextStyle(color: Colors.grey),
+          ),
         ],
-      ), value: "4651 Bewirtung USt: 19%",));
-    list.add(new DropdownMenuItem<String>(child: new Text("4653 Aufmerksamkeiten")));
+      ),
+      value: "4651 Bewirtung USt: 19%",
+    ));
+    list.add(
+        new DropdownMenuItem<String>(child: new Text("4653 Aufmerksamkeiten")));
 
     return list;
   }
-  List<DropdownMenuItem> GetKostenstellenValues(){
+
+  List<DropdownMenuItem> GetKostenstellenValues() {
     List<DropdownMenuItem> list = new List();
-    list.add(new DropdownMenuItem<String>(child: new Text("180 Fuhrpark"), value: "180 Fuhrpark"));
-    list.add(new DropdownMenuItem<String>(child: new Text("160 Allgemeine sonst. Kosten 1"), value: "160 Allgemeine sonst. Kosten 1"));
+    list.add(new DropdownMenuItem<String>(
+        child: new Text("180 Fuhrpark"), value: "180 Fuhrpark"));
+    list.add(new DropdownMenuItem<String>(
+        child: new Text("160 Allgemeine sonst. Kosten 1"),
+        value: "160 Allgemeine sonst. Kosten 1"));
 
     return list;
   }
-  List<DropdownMenuItem> GetKostentraegerItems(){
+
+  List<DropdownMenuItem> GetKostentraegerItems() {
     List<DropdownMenuItem> list = new List();
-    list.add(new DropdownMenuItem(child: new Text("2010 Allgemeine Kosten 1"), value: new Text("2010 Allgemeine Kosten 1"),));
+    list.add(new DropdownMenuItem(
+      child: new Text("2010 Allgemeine Kosten 1"),
+      value: new Text("2010 Allgemeine Kosten 1"),
+    ));
     return list;
   }
-  List<DropdownMenuItem> GetUStMenuItems(){
+
+  List<DropdownMenuItem> GetUStMenuItems() {
     List<DropdownMenuItem> list = new List();
-    list.add(new DropdownMenuItem(child: new Text("8 7% USt/7% VSt"), value: "8 7% USt/7% VSt",));
-    list.add(new DropdownMenuItem(child: new Text("9 19% USt/19% VSt"), value: "8 19% USt/19% VSt",));
+    list.add(new DropdownMenuItem(
+      child: new Text("8 7% USt/7% VSt"),
+      value: "8 7% USt/7% VSt",
+    ));
+    list.add(new DropdownMenuItem(
+      child: new Text("9 19% USt/19% VSt"),
+      value: "8 19% USt/19% VSt",
+    ));
 
     return list;
   }
-  SaveTransaktion(BuildContext context) {
-    Transaktion t = new Transaktion(datumController.text, belegnummerController.text, betragController.text, kontoController.text, umsatzsteuerController.text, kostenstellenController.text, kostenTraegerController.text, buchungstextController.text, false);
-    Navigator.of(context).pop("lol");
+
+  saveTransaktion(BuildContext context) {
+    Transaktion t = new Transaktion(
+        datumController.text,
+        belegnummerController.text,
+        betragController.text,
+        kontoController.text,
+        umsatzsteuerController.text,
+        kostenstellenController.text,
+        kostenTraegerController.text,
+        buchungstextController.text,
+        false);
+    Navigator.of(context).pop(t);
   }
 }
