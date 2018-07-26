@@ -19,5 +19,5 @@ class Transaktion {
       this.kostentraeger,
       this.buchungstext,
       this.hochgeladen,
-      {this.plus});
+      this.plus);
 }

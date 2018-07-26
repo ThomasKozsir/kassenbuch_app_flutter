@@ -34,108 +34,134 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+
+
     return new Scaffold(
         appBar: new AppBar(
           title: new Text("Neue Bewegung"),
         ),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: new ListView(
-            children: <Widget>[
-              //Buchungstext
-              new TextFormField(
-                controller: buchungstextController,
-                decoration: new InputDecoration(
+          child: Form(
+            key: _formKey,
+            child: new ListView(
+              children: <Widget>[
+                //Buchungstext
+                new TextFormField(
+                  controller: buchungstextController,
+                  validator: (value){
+
+                  },
+                  keyboardType: TextInputType.text,
+                  decoration: new InputDecoration(
+                      border: const UnderlineInputBorder(),
+                      filled: true,
+                      labelText: "Buchungstext"),
+                ),
+                //Datum
+                new TextFormField(
+                  controller: datumController,
+                  keyboardType: TextInputType.datetime,
+                  validator: (value){
+                    if(value.isEmpty){
+                      return ("Bitte geben Sie ein Datum an");
+                    }
+                  },
+                  decoration: new InputDecoration(
                     border: const UnderlineInputBorder(),
                     filled: true,
-                    labelText: "Buchungstext"),
-              ),
-              //Datum
-              new TextFormField(
-                controller: datumController,
-                decoration: new InputDecoration(
-                  border: const UnderlineInputBorder(),
-                  filled: true,
-                  labelText: "Datum",
-                ),
-              ),
-              //Belegnummer
-              new TextFormField(
-                controller: belegnummerController,
-                decoration: new InputDecoration(
-                  border: const UnderlineInputBorder(),
-                  filled: true,
-                  hintText: "Email Adresse eingeben",
-                  labelText: "Belegnummer",
-                ),
-              ),
-              //Gewinn/Verlust
-              new TextFormField(
-                controller: betragController,
-                decoration: new InputDecoration(
-                  border: const UnderlineInputBorder(),
-                  filled: true,
-                  hintText: "Einnahme oder Ausgabe angeben",
-                  labelText: "Einnahme/Ausgabe",
-                ),
-              ),
-              //Konto
-              new Row(
-                mainAxisSize: MainAxisSize.max,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: new Text("Konto: "),
+                    labelText: "Datum",
                   ),
-                  new DropdownButton(
-                    items: GetKontoValues(),
-                    onChanged: (value) {},
-                  ),
-                ],
-              ),
-              //Kostenstelle
-              new Row(
-                children: <Widget>[
-                  new Text("Kostenstelle:"),
-                  new DropdownButton(
-                      items: GetKostenstellenValues(), onChanged: null)
-                ],
-              ),
-              //Kostenträger
-              new Row(
-                children: <Widget>[
-                  new Text("Kostenträger: "),
-                  new DropdownButton(
-                      items: GetKostentraegerItems(), onChanged: null)
-                ],
-              ),
-              //USt
-              new Row(
-                children: <Widget>[
-                  new Text("USt-Kennziffer: "),
-                  new DropdownButton(items: GetUStMenuItems(), onChanged: null)
-                ],
-              ),
-              //OP-Ausgleichsinfo
-              new TextFormField(
-                controller: ausgleichsinfoController,
-                decoration: new InputDecoration(
+                ),
+                //Belegnummer
+                new TextFormField(
+                  controller: belegnummerController,
+                  decoration: new InputDecoration(
                     border: const UnderlineInputBorder(),
                     filled: true,
-                    labelText: "OP-Ausgleichsinfo"),
-              ),
-              //Speicher Button
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  new MaterialButton(
-                    onPressed: () => saveTransaktion(context),
-                    child: new Text("Speichern"),
-                    color: Colors.pink,
+                    hintText: "Email Adresse eingeben",
+                    labelText: "Belegnummer",
                   ),
-                ],
-              )
-            ],
+                ),
+                //Gewinn/Verlust
+                new TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  controller: betragController,
+                  decoration: new InputDecoration(
+                    border: const UnderlineInputBorder(),
+                    filled: true,
+                    hintText: "Einnahme oder Ausgabe angeben",
+                    labelText: "Einnahme/Ausgabe",
+                  ),
+                  keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+                ),
+                //Konto
+                new Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: new Text("Konto: "),
+                    ),
+                    Expanded(
+                      child: new DropdownButton(
+                        items: GetKontoValues(),
+                        onChanged: (value) {},
+                      ),
+                    ),
+                  ],
+                ),
+                //Kostenstelle
+                new Row(
+                  children: <Widget>[
+                    new Text("Kostenstelle:"),
+                    new DropdownButton(
+                        items: GetKostenstellenValues(), onChanged: null)
+                  ],
+                ),
+                //Kostenträger
+                new Row(
+                  children: <Widget>[
+                    new Text("Kostenträger: "),
+                    new DropdownButton(
+                        items: GetKostentraegerItems(), onChanged: null)
+                  ],
+                ),
+                //USt
+                new Row(
+                  children: <Widget>[
+                    new Text("USt-Kennziffer: "),
+                    new DropdownButton(items: GetUStMenuItems(), onChanged: null)
+                  ],
+                ),
+                //OP-Ausgleichsinfo
+                new TextFormField(
+                  controller: ausgleichsinfoController,
+                  decoration: new InputDecoration(
+                      border: const UnderlineInputBorder(),
+                      filled: true,
+                      labelText: "OP-Ausgleichsinfo"),
+                ),
+                //Speicher Button
+                new Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    new MaterialButton(
+                      onPressed: () {
+                          saveTransaktion(context);
+                      },
+                      child: new Text("Speichern"),
+                      color: Colors.pink,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ));
   }
@@ -264,13 +290,15 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
     Transaktion t = new Transaktion(
         datumController.text,
         belegnummerController.text,
-        betragController.text,
+        betragController.text + "€",
         kontoController.text,
         umsatzsteuerController.text,
         kostenstellenController.text,
         kostenTraegerController.text,
         buchungstextController.text,
-        false);
+        false,
+        betragController.text.startsWith('-') ? false:true,
+    );
     Navigator.of(context).pop(t);
   }
 }

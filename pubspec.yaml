@@ -8,7 +8,7 @@ dependencies:
   device_info: 0.2.0
   intl: 0.15.6
   connectivity: 0.3.0
-  string_scanner: 1.0.2
+  string_scanner: 1.0.3
   url_launcher: 3.0.0
   cupertino_icons: 0.1.2
   video_player: 0.5.1

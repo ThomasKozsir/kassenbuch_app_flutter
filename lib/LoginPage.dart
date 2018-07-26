@@ -19,46 +19,44 @@ class LoginPageState extends State<LoginPage> {
         appBar: new AppBar(
           title: new Text(widget.title),
         ),
-        body: new Container(
-          child:
-          Padding(
-            padding: const EdgeInsets.all(64.0),
-            child: ListView(
-              children: <Widget>[
-                new Image(
-                    image: new AssetImage("assets/icon.png"),
-                    alignment: Alignment.topLeft,
-                  fit: BoxFit.scaleDown,
-                ),
-                new TextFormField(
-                    decoration: new InputDecoration(
-                      border: const UnderlineInputBorder(),
-                      filled: true,
-                      hintText: "Email Adresse eingeben",
-                      labelText: "E-Mail",
-                    ),
-                ),
-                new TextFormField(
+        body: Padding(
+          padding: const EdgeInsets.only(left: 32.0, right: 32.0, top: 32.0),
+          child: ListView(
+            children: <Widget>[
+              new Image(
+                  image: new AssetImage("assets/icon.png"),
+                  alignment: Alignment.center,
+                fit: BoxFit.scaleDown,
+              ),
+              new TextFormField(
                   decoration: new InputDecoration(
                     border: const UnderlineInputBorder(),
                     filled: true,
-                    hintText: "Passwort eingeben",
-                    labelText: "Passwort",
+                    hintText: "Email Adresse eingeben",
+                    labelText: "E-Mail",
                   ),
+              ),
+              new TextFormField(
+                scrollPadding: EdgeInsets.only(bottom: 280.0),
+                decoration: new InputDecoration(
+                  border: const UnderlineInputBorder(),
+                  filled: true,
+                  hintText: "Passwort eingeben",
+                  labelText: "Passwort",
                 ),
+              ),
 
-                Padding(
-                  padding: const EdgeInsets.only(top: 15.0),
-                  child: new RaisedButton(
-                    color: Colors.pinkAccent,
-                    child: new Text("Anmelden", style: new TextStyle(color: Colors.white)),
-                    onPressed: (){
-                      Navigator.push(context,  MaterialPageRoute(builder: (context) => new Overview()));
-                    },
-                  ),
-                )
-              ],
-            ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: new RaisedButton(
+                  color: Colors.pinkAccent,
+                  child: new Text("Anmelden", style: new TextStyle(color: Colors.white)),
+                  onPressed: (){
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) => new Overview()));
+                  },
+                ),
+              )
+            ],
           ),
         )
     );
