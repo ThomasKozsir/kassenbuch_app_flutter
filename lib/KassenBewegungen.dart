@@ -39,8 +39,11 @@ class KassenBewegungenState extends State<KassenBewegungen> {
           decoration: new BoxDecoration(
             color: Colors.grey,
           ),
-          child:   new ListView(
-                children: _ErstelleListeVonTransaktionsWidgets(_transaktionenListe),
+          child:   new ListView.builder(
+                itemCount: _transaktionenListe.length,
+                itemBuilder: (context, index) {
+                  return new TransaktionWidget(_transaktionenListe[index]);
+                },
               ),
 
           ),
