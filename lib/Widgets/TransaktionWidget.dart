@@ -4,6 +4,7 @@ import 'package:kassenbuch_app/Classes/Transaktion.dart';
 class TransaktionWidget extends StatefulWidget {
   Transaktion transaktion;
 
+
   TransaktionWidget(this.transaktion);
 
   @override
@@ -15,16 +16,12 @@ class TransaktionWidget extends StatefulWidget {
 class TransaktionWidgetState extends State<TransaktionWidget> {
   Transaktion transaktion;
 
+
   TransaktionWidgetState(this.transaktion);
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      onDismissed: (_){
-
-      },
-      key: new Key(transaktion.belegnummer),
-      child: GestureDetector(
+    return  GestureDetector(
         onTap: () {},
         child: new Container(
           decoration: new BoxDecoration(color: Colors.white),
@@ -33,56 +30,59 @@ class TransaktionWidgetState extends State<TransaktionWidget> {
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: new Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  new Column(
-                    children: <Widget>[new Text("Datum"), new Text(transaktion.datum)],
-                  ),
-                  /*new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new Column(
+                      children: <Widget>[
+                        new Text("Datum"),
+                        new Text(transaktion.datum)
+                      ],
+                    ),
+                    /*new Column(
                     children: <Widget>[
                       new Text("Belegnummer"),
                       new Text(transaktion.belegnummer)
                     ],
                   ),*/
-                  new Column(
-                    children: <Widget>[
-                      new Text("Saldoänderung"),
-                      CreateColoredSaldoText(transaktion)
-                    ],
-                  ),
-                  new Column(
-                    children: <Widget>[
-                      new Text("Konto"),
-                      new Text(transaktion.konto),
-                    ],
-                  ),
-                  /*new Column(
+                    new Column(
+                      children: <Widget>[
+                        new Text("Saldoänderung"),
+                        CreateColoredSaldoText(transaktion)
+                      ],
+                    ),
+                    new Column(
+                      children: <Widget>[
+                        new Text("Konto"),
+                        new Text(transaktion.konto),
+                      ],
+                    ),
+                    /*new Column(
                     children: <Widget>[
                       new Text("USt. %"),
                       new Text(transaktion.ust)
                     ],
                   ),*/
-                  /*new Column(
+                    /*new Column(
                     children: <Widget>[
                       new Text("Kostenstelle"),
                       new Text(transaktion.kostenstelle),
                     ],
                   ),*/
-                  /*new Column(
+                    /*new Column(
                     children: <Widget>[
                       new Text("Kostenträger"),
                       new Text(transaktion.kostentraeger)
                     ],
                   ),*/
-                  new Column(
-                    children: <Widget>[
-                      new Text("Buchungstext"),
-                      new Text(transaktion.buchungstext),
-                    ],
-                  ),
-                  GetUploadedStatusImage(transaktion),
-                ],
-            ),
+                    new Column(
+                      children: <Widget>[
+                        new Text("Buchungstext"),
+                        new Text(transaktion.buchungstext),
+                      ],
+                    ),
+                    GetUploadedStatusImage(transaktion),
+                  ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
@@ -91,22 +91,23 @@ class TransaktionWidgetState extends State<TransaktionWidget> {
                   height: 0.0,
                 ),
               )
-          ],
+            ],
           ),
         ),
-      ),
-    );
+      );
+
   }
 
   CreateColoredSaldoText(Transaktion transaktion) {
-    if(transaktion.plus != null) {
+    if (transaktion.plus != null) {
       return transaktion.plus
-          ? new Text(
-          transaktion.saldoAenderung, style: new TextStyle(color: Colors.green))
-          : new Text(
-          transaktion.saldoAenderung, style: new TextStyle(color: Colors.red));
-    }else{
-      return new Text(transaktion.saldoAenderung, style: new TextStyle(color: Colors.green));
+          ? new Text(transaktion.saldoAenderung,
+              style: new TextStyle(color: Colors.green))
+          : new Text(transaktion.saldoAenderung,
+              style: new TextStyle(color: Colors.red));
+    } else {
+      return new Text(transaktion.saldoAenderung,
+          style: new TextStyle(color: Colors.green));
     }
   }
 
@@ -114,12 +115,12 @@ class TransaktionWidgetState extends State<TransaktionWidget> {
     double height = 20.0;
     double width = 20.0;
 
-    if(transaktion.hochgeladen){
-      return new Image.asset("assets/check.png", color: Colors.green, height: height, width: height);
-    }else{
-      return new Image.asset("assets/upload.png", color: Colors.red, height: height, width: height);
+    if (transaktion.hochgeladen) {
+      return new Image.asset("assets/check.png",
+          color: Colors.green, height: height, width: height);
+    } else {
+      return new Image.asset("assets/upload.png",
+          color: Colors.red, height: height, width: height);
     }
   }
-
-
 }

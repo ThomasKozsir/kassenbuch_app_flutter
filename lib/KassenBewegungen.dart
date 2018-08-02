@@ -25,51 +25,43 @@ class KassenBewegungenState extends State<KassenBewegungen> {
     _transaktionenListe = _GetFakeTransaktionen();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
-
-    return new Scaffold(
+    return DefaultTabController(
+      length: 3,
+      child: new Scaffold(
         appBar: new AppBar(
           title: new Text(_kassenName),
+          bottom: TabBar(tabs: [
+            Tab(text: "Kassen"),
+            Tab(text: "Freigabe"),
+            Tab(text: "Kassensturz"),
+          ]),
         ),
-        body: new Container(
-          decoration: new BoxDecoration(
-            color: Colors.grey,
-          ),
-          child:   new ListView.builder(
-                itemCount: _transaktionenListe.length,
-                itemBuilder: (context, index) {
-                  return new TransaktionWidget(_transaktionenListe[index]);
-                },
+        body:
+        TabBarView(
+          children: [
+            new Container(
+              decoration: new BoxDecoration(
+                color: Colors.grey,
               ),
+              child: GetTransaktionListWidget(),
+            ),
+            //new FreigabeWidget(),
+            new Text("Platzhalter Kassensturz"),
+          ],
+        ),
 
-          ),
-
-      floatingActionButton: new FloatingActionButton(
+        floatingActionButton: new FloatingActionButton(
           onPressed: () async {
             _AddTransaktion();
           },
-        backgroundColor: Colors.pink,
-        foregroundColor: Colors.white,
-        child: new Icon(Icons.add),
-          ),
-
+          backgroundColor: Colors.pink,
+          foregroundColor: Colors.white,
+          child: new Icon(Icons.add),
+        ),
+      ),
     );
-
-  }
-
-  List<TransaktionWidget> _ErstelleListeVonTransaktionsWidgets(
-      List<Transaktion> transaktionen) {
-    List<TransaktionWidget> list = new List<TransaktionWidget>();
-
-    for (var s in transaktionen) {
-      list.add(new TransaktionWidget(s));
-    }
-
-    return list;
   }
 
   List<Transaktion> _GetFakeTransaktionen() {
@@ -79,21 +71,60 @@ class KassenBewegungenState extends State<KassenBewegungen> {
         "0815", "19.00 %", "180", "2010", "Bewirtung", true, true);
     Transaktion t2 = new Transaktion("10.06.2018", "0000002", "145.00 €",
         "1360", "7.00 %", "-", "-", "Bewirtung", false, true);
-    Transaktion t3 = new Transaktion("14.06.2018", "0000003", "23.00 €",
-        "1360", "19.00 %", "-", "-", "Bewirtung", false, true);
+    Transaktion t3 = new Transaktion("14.06.2018", "0000003", "23.00 €", "1360",
+        "19.00 %", "-", "-", "Bewirtung", false, true);
 
     liste.add(t1);
     liste.add(t2);
     liste.add(t3);
 
-
     return liste;
   }
-  Future _AddTransaktion()async {
-    final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => new NeueTransaktionsPage()));
 
-    setState((){
+  Future _AddTransaktion() async {
+    final result = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => new NeueTransaktionsPage()));
+
+    setState(() {
       _transaktionenListe.add(result);
     });
+  }
+
+  Widget GetTransaktionListWidget() {
+    return new ListView.builder(
+      itemCount: _transaktionenListe.length,
+      itemBuilder: (context, index) {
+        final Transaktion item = _transaktionenListe[index];
+        return Dismissible(
+          key: Key(item.toString()),
+          child: new TransaktionWidget(item),
+          direction: DismissDirection.endToStart,
+          movementDuration: Duration(seconds: 1),
+          background: Container(color: Colors.red),
+          secondaryBackground: Container(
+            alignment: Alignment.centerRight,
+            color: Colors.red,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: new Text(
+                "Löschen",
+                style: new TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+                textDirection: TextDirection.rtl,
+              ),
+            ),
+          ),
+          onDismissed: (direction) {
+            // Remove the item from our data source.
+            setState(() {
+              _transaktionenListe.remove(item);
+            });
+          },
+        );
+      },
+    );
   }
 }

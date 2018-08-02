@@ -19,6 +19,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
       umsatzsteuerController,
       buchungstextController,
       ausgleichsinfoController;
+  String _selectedKonto, _selectedKostenstelle, _selectedKostentraeger, _selectedUSt;
 
   NeueTransaktionsPageState() {
     datumController = TextEditingController();
@@ -36,131 +37,162 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
 
-
     return new Scaffold(
         appBar: new AppBar(
           title: new Text("Neue Bewegung"),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Form(
-            key: _formKey,
-            child: new ListView(
-              children: <Widget>[
-                //Buchungstext
-                new TextFormField(
-                  controller: buchungstextController,
-                  validator: (value){
-
-                  },
-                  keyboardType: TextInputType.text,
-                  decoration: new InputDecoration(
+          padding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 0.0),
+          child: SafeArea(
+            child: Form(
+              key: _formKey,
+              child: new ListView(
+                children: <Widget>[
+                  //Buchungstext
+                  new TextFormField(
+                    controller: buchungstextController,
+                    validator: (value){
+                        if(value.isEmpty){
+                          return "Bitte geben Sie einen Buchungstext an";
+                        }
+                    },
+                    keyboardType: TextInputType.text,
+                    decoration: new InputDecoration(
+                        border: const UnderlineInputBorder(),
+                        filled: true,
+                        labelText: "Buchungstext"),
+                  ),
+                  //Datum
+                  new TextFormField(
+                    controller: datumController,
+                    keyboardType: TextInputType.datetime,
+                    validator: (value){
+                      if(value.isEmpty){
+                        return ("Bitte geben Sie ein Datum an");
+                      }
+                    },
+                    decoration: new InputDecoration(
                       border: const UnderlineInputBorder(),
                       filled: true,
-                      labelText: "Buchungstext"),
-                ),
-                //Datum
-                new TextFormField(
-                  controller: datumController,
-                  keyboardType: TextInputType.datetime,
-                  validator: (value){
-                    if(value.isEmpty){
-                      return ("Bitte geben Sie ein Datum an");
-                    }
-                  },
-                  decoration: new InputDecoration(
-                    border: const UnderlineInputBorder(),
-                    filled: true,
-                    labelText: "Datum",
-                  ),
-                ),
-                //Belegnummer
-                new TextFormField(
-                  controller: belegnummerController,
-                  decoration: new InputDecoration(
-                    border: const UnderlineInputBorder(),
-                    filled: true,
-                    hintText: "Email Adresse eingeben",
-                    labelText: "Belegnummer",
-                  ),
-                ),
-                //Gewinn/Verlust
-                new TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                  },
-                  controller: betragController,
-                  decoration: new InputDecoration(
-                    border: const UnderlineInputBorder(),
-                    filled: true,
-                    hintText: "Einnahme oder Ausgabe angeben",
-                    labelText: "Einnahme/Ausgabe",
-                  ),
-                  keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
-                ),
-                //Konto
-                new Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: new Text("Konto: "),
+                      labelText: "Datum",
                     ),
-                    Expanded(
-                      child: new DropdownButton(
+                  ),
+                  //Belegnummer
+                  new TextFormField(
+                    controller: belegnummerController,
+                    decoration: new InputDecoration(
+                      border: const UnderlineInputBorder(),
+                      filled: true,
+                      hintText: "Email Adresse eingeben",
+                      labelText: "Belegnummer",
+                    ),
+                  ),
+                  //Gewinn/Verlust
+                  new TextFormField(
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return "Bitte geben Sie den Gewinn/Verlust an";
+                      }
+                    },
+                    controller: betragController,
+                    decoration: new InputDecoration(
+                      border: const UnderlineInputBorder(),
+                      filled: true,
+                      hintText: "Einnahme oder Ausgabe angeben",
+                      labelText: "Einnahme/Ausgabe",
+                    ),
+                    keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
+                  ),
+                  //Konto
+                  new Row(
+                    children: <Widget>[
+                      Text("Konto: "),
+                      SizedBox(width: 15.0,),
+                      new DropdownButton(
+                        value: _selectedKonto,
                         items: GetKontoValues(),
-                        onChanged: (value) {},
+                        hint: new Text("Konto wählen"),
+                        onChanged: ( value) {
+                            _selectedKonto = value;
+                          setState(() {
+                          });
+                        },
                       ),
-                    ),
-                  ],
-                ),
-                //Kostenstelle
-                new Row(
-                  children: <Widget>[
-                    new Text("Kostenstelle:"),
-                    new DropdownButton(
-                        items: GetKostenstellenValues(), onChanged: null)
-                  ],
-                ),
-                //Kostenträger
-                new Row(
-                  children: <Widget>[
-                    new Text("Kostenträger: "),
-                    new DropdownButton(
-                        items: GetKostentraegerItems(), onChanged: null)
-                  ],
-                ),
-                //USt
-                new Row(
-                  children: <Widget>[
-                    new Text("USt-Kennziffer: "),
-                    new DropdownButton(items: GetUStMenuItems(), onChanged: null)
-                  ],
-                ),
-                //OP-Ausgleichsinfo
-                new TextFormField(
-                  controller: ausgleichsinfoController,
-                  decoration: new InputDecoration(
-                      border: const UnderlineInputBorder(),
-                      filled: true,
-                      labelText: "OP-Ausgleichsinfo"),
-                ),
-                //Speicher Button
-                new Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    new MaterialButton(
-                      onPressed: () {
-                          saveTransaktion(context);
-                      },
-                      child: new Text("Speichern"),
-                      color: Colors.pink,
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  ),
+                  //Kostenstelle
+                  new Row(
+                    children: <Widget>[
+                      new Text("Kostenstelle:"),
+                      new DropdownButton(
+                        value: _selectedKostenstelle,
+                        hint: new Text("Kostenstelle wählen"),
+                          items: GetKostenstellenValues(),
+                          onChanged: (value){
+                            _selectedKostenstelle = value;
+                            setState(() {
+
+                            });
+                          },
+                          )
+                    ],
+                  ),
+                  //Kostenträger
+                  new Row(
+                    children: <Widget>[
+                      new Text("Kostenträger: ", style: new TextStyle(color: Colors.grey),),
+                      SizedBox(width: 15.0,),
+                      Expanded(
+                        child: new DropdownButton(
+                          hint: new Text("automatische Wahl"),
+                            items: GetKostentraegerItems(), onChanged: null),
+                      )
+                    ],
+                  ),
+                  //USt
+                  new Row(
+                    children: <Widget>[
+                      new Text("USt-Kennziffer: ", style: new TextStyle(color: Colors.grey),),
+                      SizedBox(width: 15.0,),
+                      Expanded(
+                        child: new DropdownButton(
+                          hint: new Text("automatische Wahl"),
+                            items: GetUStMenuItems(),
+                            onChanged: null,
+                        ),
+                      )
+                    ],
+                  ),
+                  //OP-Ausgleichsinfo
+                  new Row(
+                    children: <Widget>[
+                      new Text("OP-Ausgleichsinfo: ", style: new TextStyle(color: Colors.grey),),
+                      SizedBox(width: 15.0,),
+                      Expanded(
+                        child: new DropdownButton(
+                          hint: new Text("automatische Wahl"),
+                          items:  new List<DropdownMenuItem>(),
+                          onChanged: null,
+                        ),
+                      )
+                    ],
+                  ),
+                  //Speicher Button
+                  new Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      new MaterialButton(
+                        onPressed: () {
+                          if(_formKey.currentState.validate())
+                            saveTransaktion(context);
+                        },
+                        child: new Text("Speichern"),
+                        color: Colors.pink,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ));
@@ -193,7 +225,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
           new Text("4530 Tanken"),
           new Text(
             "Kostenstelle: 180 Kostenträger: 2010",
-            style: new TextStyle(color: Colors.grey),
+            style: new TextStyle(color: Colors.grey, fontSize: 12.0),
           ),
         ],
       ),
@@ -210,7 +242,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
           new Text("4600 Werbekosten"),
           new Text(
             "Kostenstelle: Allgemeine sonst. Kosten 1",
-            style: new TextStyle(color: Colors.grey),
+            style: new TextStyle(color: Colors.grey, fontSize: 12.0),
           ),
         ],
       ),
@@ -218,7 +250,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
     ));
     list.add(new DropdownMenuItem<String>(
       child: new Text("4640 Repräsentationskosten"),
-      value: "4600 Werbekosten",
+      value: "4640 Repräsentationskosten",
     ));
     list.add(new DropdownMenuItem<String>(
       child: new Column(
@@ -227,7 +259,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
           new Text("4651 Bewirtung"),
           new Text(
             "USt: 7% USt/7% VSt",
-            style: new TextStyle(color: Colors.grey),
+            style: new TextStyle(color: Colors.grey, fontSize: 12.0),
           ),
         ],
       ),
@@ -240,14 +272,13 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
           new Text("4651 Bewirtung"),
           new Text(
             "USt: 19% USt/19% VSt",
-            style: new TextStyle(color: Colors.grey),
+            style: new TextStyle(color: Colors.grey, fontSize: 12.0),
           ),
         ],
       ),
       value: "4651 Bewirtung USt: 19%",
     ));
-    list.add(
-        new DropdownMenuItem<String>(child: new Text("4653 Aufmerksamkeiten")));
+    list.add(new DropdownMenuItem<String>(child: new Text("4653 Aufmerksamkeiten"), value: "4653 Aufmerksamkeiten",));
 
     return list;
   }
@@ -256,6 +287,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
     List<DropdownMenuItem> list = new List();
     list.add(new DropdownMenuItem<String>(
         child: new Text("180 Fuhrpark"), value: "180 Fuhrpark"));
+
     list.add(new DropdownMenuItem<String>(
         child: new Text("160 Allgemeine sonst. Kosten 1"),
         value: "160 Allgemeine sonst. Kosten 1"));
