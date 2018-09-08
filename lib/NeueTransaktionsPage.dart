@@ -10,6 +10,9 @@ class NeueTransaktionsPage extends StatefulWidget {
 }
 
 class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
+
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController datumController,
       belegnummerController,
       betragController,
@@ -35,7 +38,7 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    //final _transactionTextKey = new GlobalKey(debugLabel: 'transactionText');
 
     return new Scaffold(
         appBar: new AppBar(
