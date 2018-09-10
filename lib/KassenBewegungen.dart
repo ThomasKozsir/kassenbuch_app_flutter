@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:kassenbuch_app/Classes/Transaktion.dart';
 import 'package:kassenbuch_app/NeueTransaktionsPage.dart';
+import 'package:kassenbuch_app/Widgets/KassensturzWidget.dart';
 import 'package:kassenbuch_app/Widgets/TransaktionWidget.dart';
 
 class KassenBewegungen extends StatefulWidget {
@@ -41,14 +42,18 @@ class KassenBewegungenState extends State<KassenBewegungen> {
         body:
         TabBarView(
           children: [
+            //Transaktionen
             new Container(
               decoration: new BoxDecoration(
                 color: Colors.grey,
               ),
               child: GetTransaktionListWidget(),
             ),
+            //Freigabe
             //new FreigabeWidget(),
-            new Text("Platzhalter Kassensturz"),
+            new Text("Freigabe platzhalter"),
+            //Kassensturz
+            new KassensturzWidget(),
           ],
         ),
 
