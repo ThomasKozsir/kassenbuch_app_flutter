@@ -51,6 +51,9 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
               key: _formKey,
               child: new ListView(
                 children: <Widget>[
+
+                  //TextFormFields
+
                   //Buchungstext
                   new TextFormField(
                     controller: buchungstextController,
@@ -106,79 +109,113 @@ class NeueTransaktionsPageState extends State<NeueTransaktionsPage> {
                     ),
                     keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
                   ),
-                  //Konto
-                  new Row(
-                    children: <Widget>[
-                      Text("Konto: "),
-                      SizedBox(width: 15.0,),
-                      new DropdownButton(
-                        value: _selectedKonto,
-                        items: GetKontoValues(),
-                        hint: new Text("Konto wählen"),
-                        onChanged: ( value) {
-                            _selectedKonto = value;
-                          setState(() {
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                  //Kostenstelle
-                  new Row(
-                    children: <Widget>[
-                      new Text("Kostenstelle:"),
-                      new DropdownButton(
-                        value: _selectedKostenstelle,
-                        hint: new Text("Kostenstelle wählen"),
-                          items: GetKostenstellenValues(),
-                          onChanged: (value){
-                            _selectedKostenstelle = value;
-                            setState(() {
 
-                            });
-                          },
-                          )
-                    ],
-                  ),
-                  //Kostenträger
-                  new Row(
-                    children: <Widget>[
-                      new Text("Kostenträger: ", style: new TextStyle(color: Colors.grey),),
-                      SizedBox(width: 15.0,),
-                      Expanded(
-                        child: new DropdownButton(
-                          hint: new Text("automatische Wahl"),
-                            items: GetKostentraegerItems(), onChanged: null),
-                      )
-                    ],
-                  ),
-                  //USt
-                  new Row(
-                    children: <Widget>[
-                      new Text("USt-Kennziffer: ", style: new TextStyle(color: Colors.grey),),
-                      SizedBox(width: 15.0,),
-                      Expanded(
-                        child: new DropdownButton(
-                          hint: new Text("automatische Wahl"),
-                            items: GetUStMenuItems(),
-                            onChanged: null,
-                        ),
-                      )
-                    ],
-                  ),
-                  //OP-Ausgleichsinfo
-                  new Row(
-                    children: <Widget>[
-                      new Text("OP-Ausgleichsinfo: ", style: new TextStyle(color: Colors.grey),),
-                      SizedBox(width: 15.0,),
-                      Expanded(
-                        child: new DropdownButton(
-                          hint: new Text("automatische Wahl"),
-                          items:  new List<DropdownMenuItem>(),
-                          onChanged: null,
-                        ),
-                      )
-                    ],
+                  //spinner
+                  new Table(
+                    children: <TableRow>[
+                      //Konto
+                   new TableRow(
+                       children: <TableCell>[
+                         TableCell(
+                           child: Align(
+                             alignment: Alignment.centerLeft ,
+                               child: Text("Konto: ")),
+                           verticalAlignment: TableCellVerticalAlignment.middle,
+                         ),
+                         TableCell(
+                           child: new DropdownButton(
+                             value: _selectedKonto,
+                             items: GetKontoValues(),
+                             hint: new Text("Konto wählen"),
+                             onChanged: ( value) {
+                               _selectedKonto = value;
+                               setState(() {
+                               });
+                             },
+                           ),
+                         ),
+                       ]
+                   ),
+                   //Kostenstelle
+                   new TableRow(
+                       children: <TableCell>[
+                         TableCell(
+                           child: Align(
+                               alignment: Alignment.centerLeft ,
+                               child: Text("Kostenstelle: ")),
+                           verticalAlignment: TableCellVerticalAlignment.middle,
+                         ),
+                         TableCell(
+                           child: new DropdownButton(
+                             value: _selectedKostenstelle,
+                             hint: new Text("Kostenstelle wählen"),
+                             items: GetKostenstellenValues(),
+                             onChanged: (value){
+                               _selectedKostenstelle = value;
+                               setState(() {
+
+                               });
+                             },
+                           ),
+                         ),
+                       ]
+                   ),
+
+                   //Kostenträger
+                   new TableRow(
+                       children: <TableCell>[
+                         TableCell(
+                           child: Align(
+                               alignment: Alignment.centerLeft ,
+                               child: Text("Kostenträger: ")),
+                           verticalAlignment: TableCellVerticalAlignment.middle,
+                         ),
+                         TableCell(
+                           child: new DropdownButton(
+                               hint: new Text("automatische Wahl"),
+                               items: GetKostentraegerItems(), onChanged: null),
+                         ),
+                       ]
+                   ),
+
+                   //USt
+                   new TableRow(
+                       children: <TableCell>[
+                         TableCell(
+                           child: Align(
+                               alignment: Alignment.centerLeft ,
+                               child: Text("USt-Kennziffer: ")),
+                           verticalAlignment: TableCellVerticalAlignment.middle,
+                         ),
+                         TableCell(
+                           child: new DropdownButton(
+                             hint: new Text("automatische Wahl"),
+                             items: GetUStMenuItems(),
+                             onChanged: null,
+                           ),
+                         ),
+                       ]
+                   ),
+
+                   //OP-Ausgleichsinfo
+                   new TableRow(
+                       children: <TableCell>[
+                         TableCell(
+                           child: Align(
+                               alignment: Alignment.centerLeft ,
+                               child: Text("OP-Ausgleichsinfo: ")),
+                           verticalAlignment: TableCellVerticalAlignment.middle,
+                         ),
+                         TableCell(
+                           child: new DropdownButton(
+                             hint: new Text("automatische Wahl"),
+                             items:  new List<DropdownMenuItem>(),
+                             onChanged: null,
+                           ),
+                         ),
+                       ]
+                   ),
+                   ],
                   ),
                   //Speicher Button
                   new Row(
