@@ -389,21 +389,21 @@ class KassensturzWidgetState extends State<KassensturzWidget> {
                     TableCell(child: new Text("Gesamtsumme: ")),
                     TableCell(
                       child: new Text(
-                          sum.toString(),
-                        textAlign: TextAlign.center,
+                          sum.toStringAsFixed(2)  + "€",
+
                       ),
                     ),
                   ]),
                   //saldo
                   new TableRow(children: <Widget>[
                     new TableCell(child: new Text("Saldo Kassenbuch: ")),
-                    new TableCell(child: new Text(saldo.toString())),
+                    new TableCell(child: new Text(saldo.toStringAsFixed(2) + "€")),
                   ]),
                   new TableRow(children: <Widget>[
                     new TableCell(child: new Text("Differenz")),
                     new TableCell(
                         child:
-                            new Text(delta.toString())),
+                            new Text(delta.toStringAsFixed(2) + "€")),
                   ])
                 ]),
               )
